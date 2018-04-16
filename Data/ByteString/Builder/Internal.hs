@@ -262,7 +262,7 @@ ciosToLazyByteString strategy k =
   where
     go (Finished buf x) =
         second (trimmedChunkFromBuffer strategy buf) $ k x
-    go (Yield1 bs io)   = second (L.Chunk bs) $ unsafeDupablePerformIO (go <$> io)
+    go (Yield1 bs io)   = second ((\eta -> L.Chunk bs eta)) $ unsafeDupablePerformIO (go <$> io)
 
 ------------------------------------------------------------------------------
 -- Build signals
